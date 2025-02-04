@@ -1,0 +1,11 @@
+{
+  "appId": "com.attroney.ele-test",
+  "files": [
+    "dist-electron",
+    "dist-react"
+  ],
+  "icon": "src/ui/assets/ico.png",
+  "win": {
+    "target": "portable"
+  }
+}
