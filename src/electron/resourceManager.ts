@@ -11,12 +11,7 @@ export function pollRes(mainWindow: BrowserWindow) {
     const cpuUsage = await getCpuUsage();
     const ramUsage = getRamUsage();
     const storageUsage = getStorageData().usage;
-    // mainWindow.webContents.send("statistics", {
-    //   cpuUsage,
-    //   ramUsage,
-    //   storageUsage,
-    //   staticData,
-    // });
+
     ipcWebContentsSend('statistics', mainWindow.webContents, {
       cpuUsage,
       ramUsage,

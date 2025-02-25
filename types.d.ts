@@ -10,9 +10,12 @@ type StaticData = {
   totalMemoryInGB: number,
 };
 
+type View = 'cpu' | 'CPU' | 'ram' | 'RAM' | 'storage' | 'STORAGE';
+
 type EventPayloadMapping = {
   statistics: Statistics,
   getStaticData: StaticData,
+  changeView: View,
 }
 
 type UnsubscribeFunc = () => void;
@@ -20,6 +23,7 @@ type UnsubscribeFunc = () => void;
 interface Window {
   electron: {
     subscribeStatistics: (callback: (statistics: Statistics) => void) => UnsubscribeFunc,
+    subscribeViewChange: (callback: (view: View) => void) => UnsubscribeFunc,
     getStaticData: () => Promise<StaticData>
   }
 }

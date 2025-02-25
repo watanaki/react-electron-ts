@@ -4,6 +4,9 @@
     "dist-electron",
     "dist-react"
   ],
+  "extraResouces": [
+    "src/assets/**"
+  ],
   "icon": "src/ui/assets/ico.png",
   "win": {
     "target": "portable"
