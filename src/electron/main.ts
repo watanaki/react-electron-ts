@@ -1,5 +1,5 @@
 import { app, BrowserWindow, ipcMain, nativeTheme, Tray } from "electron";
-import { getUIPath, ipcMainHandle, isDev } from "./utils.js";
+import { getUIPath, ipcMainHandle, ipcMainOn, isDev } from "./utils.js";
 import { getStaticData, pollRes } from "./resourceManager.js";
 import { getPreloadPath } from "./pathResolver.js";
 import { createTray } from "./tray.js";
@@ -8,8 +8,9 @@ import { createMenu } from "./menu.js";
 app.on('ready', () => {
   const mainWindow = new BrowserWindow({
     webPreferences: {
-      preload: getPreloadPath()
-    }
+      preload: getPreloadPath(),
+    },
+    frame: false,
   });
   if (isDev()) mainWindow.loadURL("http://localhost:5123");
   else mainWindow.loadFile(getUIPath());
@@ -20,6 +21,15 @@ app.on('ready', () => {
   createTray(mainWindow);
   handleCloseEvents(mainWindow);
   createMenu(mainWindow);
+
+  ipcMainOn('changeFrameAction', (frameAction) => {
+    if (frameAction === 'close')
+      mainWindow.close();
+    else if (frameAction === 'maximize')
+      mainWindow.maximize();
+    else if (frameAction === 'minimize')
+      mainWindow.minimize();
+  })
 });
 
 function handleCloseEvents(mainWindow: BrowserWindow) {
